@@ -32,7 +32,12 @@ elif [ $mode = "pop" ]; then
 	path=$(tail -n -1 $STACK_FILE)
 
 	head -n -1 "$STACK_FILE" > "$STACK_FILE.tmp"
-	mv "$STACK_FILE.tmp" $STACK_FILE
+	if [ $? -eq 0 ]; then
+		mv "$STACK_FILE.tmp" $STACK_FILE
+	else
+		echo "Error with temporary file."
+		exit
+	fi
 
 	cd $path
 
