@@ -1,21 +1,22 @@
 #!/bin/bash
 # Very simple stack-like directory handler.
+# SOURCE this in your bashrc to use it
 
 STACK_FILE="$HOME/.dstack.txt"
 
-mode=$(echo $1 | tr '[A-Z]' '[a-z]');
+function spush {
 
-if [ $mode = "push" ]; then
-
-	if [ $# -gt 1 ]; then
-		path=$2
+	if [ $# -gt 0 ]; then
+		path=$1
 	else
 		path=$(pwd)
 	fi
 
 	echo $path >> $STACK_FILE
+	echo "Push \"$path\""
+}
 	
-elif [ $mode = "pop" ]; then
+function spop {
 
 	if [ -f $STACK_FILE ]; then
 		lines=$(wc -l $STACK_FILE | cut -d ' ' -f 1)
@@ -32,6 +33,7 @@ elif [ $mode = "pop" ]; then
 	path=$(tail -n -1 $STACK_FILE)
 
 	head -n -1 "$STACK_FILE" > "$STACK_FILE.tmp"
+
 	if [ $? -eq 0 ]; then
 		mv "$STACK_FILE.tmp" $STACK_FILE
 	else
@@ -40,7 +42,4 @@ elif [ $mode = "pop" ]; then
 	fi
 
 	cd $path
-
-else
-	printf "Usage: $0 <push | pop> [path]\nExample: $0 push\n\n";
-fi
+}
