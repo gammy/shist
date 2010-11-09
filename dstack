@@ -1,6 +1,7 @@
 #!/bin/bash
 # Very simple stack-like directory handler.
 # SOURCE this in your bashrc to use it
+# by gammy & phyber 
 
 STACK_FILE="$HOME/.dstack.txt"
 
@@ -13,7 +14,6 @@ function spush {
 	fi
 
 	echo $path >> $STACK_FILE
-	echo "Push \"$path\""
 }
 	
 function spop {
