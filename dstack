@@ -17,7 +17,12 @@ if [ $mode = "push" ]; then
 	
 elif [ $mode = "pop" ]; then
 
-	lines=$(wc -l $STACK_FILE | cut -d ' ' -f 1)
+	if [ -f $STACK_FILE ]; then
+		lines=$(wc -l $STACK_FILE | cut -d ' ' -f 1)
+	else
+		echo "Nothing to pop."
+		exit
+	fi
 
 	echo ">$lines"
 
