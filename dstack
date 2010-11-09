@@ -19,15 +19,16 @@ elif [ $mode = "pop" ]; then
 
 	lines=$(wc -l $STACK_FILE | cut -d ' ' -f 1)
 
-	echo ">$lines"
-
 	if [ $lines -eq 0 ]; then
 		echo "Nothing to pop."
 		exit
 	fi
 
-	path=$(tail -1 $STACK_FILE)
-	cat $STACK_FILE | head -n -1 > $STACK_FILE
+	path=$(tail -n -1 $STACK_FILE)
+
+	head -n -1 "$STACK_FILE" > "$STACK_FILE.tmp"
+	mv "$STACK_FILE.tmp" $STACK_FILE
+
 	cd $path
 
 else
