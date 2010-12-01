@@ -8,18 +8,18 @@ STACK_FILE="$HOME/.dstack.txt"
 function spush {
 
 	if [ $# -gt 0 ]; then
-		path=$1
+		path="$1"
 	else
-		path=$(pwd)
+		path="$(pwd)"
 	fi
 
-	echo $path >> $STACK_FILE
+	echo "$path" >> "$STACK_FILE"
 }
 	
 function spop {
 
-	if [ -f $STACK_FILE ]; then
-		lines=$(wc -l $STACK_FILE | cut -d ' ' -f 1)
+	if [ -f "$STACK_FILE" ]; then
+		lines=$(wc -l "$STACK_FILE" | cut -d ' ' -f 1)
 	else
 		echo "Nothing to pop."
 		exit
@@ -30,16 +30,16 @@ function spop {
 		exit
 	fi
 
-	path=$(tail -n -1 $STACK_FILE)
+	path=$(tail -n -1 "$STACK_FILE")
 
 	head -n -1 "$STACK_FILE" > "$STACK_FILE.tmp"
 
 	if [ $? -eq 0 ]; then
-		mv "$STACK_FILE.tmp" $STACK_FILE
+		mv "$STACK_FILE.tmp" "$STACK_FILE"
 	else
 		echo "Error with temporary file."
 		exit
 	fi
 
-	cd $path
+	cd "$path"
 }
