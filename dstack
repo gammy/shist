@@ -22,12 +22,12 @@ function spop {
 		lines=$(wc -l "$STACK_FILE" | cut -d ' ' -f 1)
 	else
 		echo "Nothing to pop."
-		exit
+		return
 	fi
 
 	if [ $lines -eq 0 ]; then
 		echo "Nothing to pop."
-		exit
+		return
 	fi
 
 	path=$(tail -n -1 "$STACK_FILE")
@@ -38,7 +38,7 @@ function spop {
 		mv "$STACK_FILE.tmp" "$STACK_FILE"
 	else
 		echo "Error with temporary file."
-		exit
+		return
 	fi
 
 	cd "$path"
